@@ -89,6 +89,7 @@ public class TheRecipeAdapter extends RecyclerView.Adapter<TheRecipeAdapter.View
 
             //ivRecipeImage = itemView.findViewById(R.id.recipe_thumbNail);
             tvRecipeName = itemView.findViewById(R.id.recipe_title);
+            // This code tells the clickListener to listen for click on this ViewHolder
             itemView.setOnClickListener(this);
 
         }
