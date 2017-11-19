@@ -5,31 +5,34 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.tin.bakingapp.MainActivity;
 import com.example.tin.bakingapp.Models.TheRecipe;
 import com.example.tin.bakingapp.R;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Tin on 18/11/2017.
- */
 
 public class TheRecipeAdapter extends RecyclerView.Adapter<TheRecipeAdapter.ViewHolder> {
 
     private final List<TheRecipe> recipes;
     private final Context context;
 
-    RecipeListItemClickListener mOnClickListener;
+    final ListItemClickListener mOnClickListener;
 
-    public interface RecipeListItemClickListener {
+
+    public interface ListItemClickListener {
         void onListItemClick (int clickedItemIndex);
     }
 
-
-    public TheRecipeAdapter(List<TheRecipe> recipes, Context context) {
+    public TheRecipeAdapter(List<TheRecipe> recipes, Context context, ListItemClickListener listener) {
         this.recipes = recipes;
         this.context = context;
+        mOnClickListener = listener;
     }
 
     /**
@@ -43,7 +46,7 @@ public class TheRecipeAdapter extends RecyclerView.Adapter<TheRecipeAdapter.View
                 .inflate(R.layout.recipes_list_item, viewGroup, false);
 
         // Return the View we just created
-        return new TheRecipeAdapter.ViewHolder(v);
+        return new ViewHolder(v);
     }
 
     /**
@@ -57,10 +60,9 @@ public class TheRecipeAdapter extends RecyclerView.Adapter<TheRecipeAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
-        TheRecipe recipe = recipes.get(position);
+        TheRecipe theRecipe = recipes.get(position);
 
-        viewHolder.userNameTV.setText(review.getUserName());
-        viewHolder.userReviewTV.setText(review.getUserComment());
+        viewHolder.tvRecipeName.setText(theRecipe.getName());
 
     }
 
@@ -69,11 +71,10 @@ public class TheRecipeAdapter extends RecyclerView.Adapter<TheRecipeAdapter.View
         return recipes.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        final TextView userNameTV;
-        final TextView userReviewTV;
-
+        ImageView ivRecipeImage;
+        TextView tvRecipeName;
 
         @Override
         public void onClick(View view) {
@@ -87,8 +88,8 @@ public class TheRecipeAdapter extends RecyclerView.Adapter<TheRecipeAdapter.View
         public ViewHolder(View itemView) {
             super(itemView);
 
-            userNameTV = (TextView) itemView.findViewById(R.id.user_name);
-            userReviewTV = (TextView) itemView.findViewById(R.id.user_review);
+            ivRecipeImage = itemView.findViewById(R.id.recipe_thumbNail);
+            tvRecipeName = itemView.findViewById(R.id.recipe_title);
 
         }
 

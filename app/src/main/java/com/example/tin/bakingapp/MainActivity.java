@@ -4,11 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.tin.bakingapp.Adapters.TheRecipeAdapter;
@@ -16,22 +15,19 @@ import com.example.tin.bakingapp.Models.TheRecipe;
 import com.example.tin.bakingapp.NetworkUtils.NetworkAsyncTask;
 import com.example.tin.bakingapp.NetworkUtils.NetworkAsyncTaskListener;
 
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskListener, TheRecipeAdapter.ListItemClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     // Needed for the RecyclerView
     // This will be used to attach the RecyclerView to the MovieAdapter
-    private @BindView(R.id.recyclerView_cakes) RecyclerView mRecyclerView;
+    @BindView(R.id.recyclerView_cakes) RecyclerView mRecyclerView;
     private RecyclerView.Adapter recipeAdapter;
-    ArrayList<TheRecipe> mTheRecipes;
 
     // Used to check if the device has internet connection
     ConnectivityManager connectionManager;
@@ -66,11 +62,9 @@ public class MainActivity extends AppCompatActivity {
         if (connectionManager != null)
             networkInfo = connectionManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            NetworkAsyncTask parceRecipeJson = new NetworkAsyncTask((NetworkAsyncTaskListener) this);
-            parceRecipeJson.execute();
+            NetworkAsyncTask getData = new NetworkAsyncTask((NetworkAsyncTaskListener) this);
+            getData.execute();
 
-            recipeAdapter = new TheRecipeAdapter(mTheRecipes, getApplicationContext());
-            mRecyclerView.setAdapter(recipeAdapter);
 
 
         } else {
@@ -83,4 +77,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void returnRecipeContent(ArrayList<TheRecipe> theRecipeContent) {
+        recipeAdapter = new TheRecipeAdapter(theRecipeContent, getApplicationContext(), MainActivity.this);
+        mRecyclerView.setAdapter(recipeAdapter);
+
+        Log.d(TAG, "List of Recipes: " + theRecipeContent);
+
+    }
+
+    /** This Only Works If You Implement: implements TheRecipeAdapter.ListItemClickListener */
+    @Override
+    public void onListItemClick(int clickedItemIndex) {
+
+        Log.v(TAG, "clikedItemIndex" + clickedItemIndex);
+        //Toast.makeText(this, "ClickItemIndex: " + clickedItemIndex, Toast.LENGTH_SHORT).show();
+    }
 }

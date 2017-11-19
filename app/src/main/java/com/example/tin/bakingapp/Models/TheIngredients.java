@@ -5,7 +5,6 @@ import org.parceler.Parcel;
 /**
  * Created by Tin on 18/11/2017.
  */
-@Parcel
 public class TheIngredients {
 
     private int quantity;

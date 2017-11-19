@@ -98,10 +98,9 @@ public class NetworkAsyncTask extends AsyncTask<Void, Void, ArrayList<TheRecipe>
                 int recipeServings = currentRecipe.getInt("servings");
                 String recipeImage = currentRecipe.getString("image");
                 // Saving the current recipe including the ingredientList and stepsList as an ArrayList called "theRecipe"
-//                TheRecipe theRecipe = new TheRecipe(recipeId, recipeName, ingredientList, stepsList, recipeServings, recipeImage);
-//                // Adding the newly created recipe "theRecipe" into the list theRecipeContent
-//                theRecipeContent.add(theRecipe);
-                Parcelable wrappedRecipe = Parcels.wrap(new TheRecipe(recipeId, recipeName, ingredientList, stepsList, recipeServings, recipeImage));
+                TheRecipe theRecipe = new TheRecipe(recipeId, recipeName, ingredientList, stepsList, recipeServings, recipeImage);
+                // Adding the newly created recipe "theRecipe" into the list theRecipeContent
+                theRecipeContent.add(theRecipe);
 
 
                 Log.v(TAG, "theRecipeContent Json: " + theRecipeContent);
