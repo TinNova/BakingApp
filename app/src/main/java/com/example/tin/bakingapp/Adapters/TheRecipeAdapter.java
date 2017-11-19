@@ -73,7 +73,7 @@ public class TheRecipeAdapter extends RecyclerView.Adapter<TheRecipeAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        ImageView ivRecipeImage;
+        //ImageView ivRecipeImage;
         TextView tvRecipeName;
 
         @Override
@@ -84,12 +84,12 @@ public class TheRecipeAdapter extends RecyclerView.Adapter<TheRecipeAdapter.View
 
         }
 
-
         public ViewHolder(View itemView) {
             super(itemView);
 
-            ivRecipeImage = itemView.findViewById(R.id.recipe_thumbNail);
+            //ivRecipeImage = itemView.findViewById(R.id.recipe_thumbNail);
             tvRecipeName = itemView.findViewById(R.id.recipe_title);
+            itemView.setOnClickListener(this);
 
         }
 

@@ -91,6 +91,6 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
     public void onListItemClick(int clickedItemIndex) {
 
         Log.v(TAG, "clikedItemIndex" + clickedItemIndex);
-        //Toast.makeText(this, "ClickItemIndex: " + clickedItemIndex, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "ClickItemIndex: " + clickedItemIndex, Toast.LENGTH_SHORT).show();
     }
 }
