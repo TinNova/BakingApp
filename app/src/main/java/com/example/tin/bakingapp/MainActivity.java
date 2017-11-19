@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
                 new LinearLayoutManager(this);
         // Set the mRecyclerView to the layoutManager so it can handle the positioning of the items
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        
+
 
         // Checking If The Device Is Connected To The Internet
         connectionManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

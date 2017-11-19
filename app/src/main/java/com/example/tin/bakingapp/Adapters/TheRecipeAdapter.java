@@ -95,6 +95,3 @@ public class TheRecipeAdapter extends RecyclerView.Adapter<TheRecipeAdapter.View
 
     }
 }
-
-
-
