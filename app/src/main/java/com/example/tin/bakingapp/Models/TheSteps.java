@@ -1,11 +1,28 @@
 package com.example.tin.bakingapp.Models;
 
-import org.parceler.Parcel;
 
-/**
- * Created by Tin on 18/11/2017.
- */
-public class TheSteps {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class TheSteps implements Parcelable{
+
+    public static final Parcelable.Creator<TheSteps> CREATOR = new Creator<TheSteps>() {
+        @Override
+        public TheSteps createFromParcel(Parcel in) {
+            TheSteps instance = new TheSteps();
+            instance.id = ((int) in.readValue((int.class.getClassLoader())));
+            instance.shortDescription = ((String) in.readValue((String.class.getClassLoader())));
+            instance.description = ((String) in.readValue((String.class.getClassLoader())));
+            instance.videoURL = ((String) in.readValue((String.class.getClassLoader())));
+            instance.thumbnailURL = ((String) in.readValue((String.class.getClassLoader())));
+            return instance;
+        }
+
+        @Override
+        public TheSteps[] newArray(int size) {
+            return new TheSteps[size];
+        }
+    };
 
     private int id;
     private String shortDescription;
@@ -13,7 +30,7 @@ public class TheSteps {
     private String videoURL;
     private String thumbnailURL;
 
-    public TheSteps(){}
+    private TheSteps(){}
 
     public TheSteps(int id, String shortDescription, String description, String videoURL, String thumbnailURL) {
         super();
@@ -23,6 +40,15 @@ public class TheSteps {
         this.videoURL = videoURL;
         this.thumbnailURL = thumbnailURL;
     }
+
+
+//    protected TheSteps(Parcel in) {
+//        id = in.readInt();
+//        shortDescription = in.readString();
+//        description = in.readString();
+//        videoURL = in.readString();
+//        thumbnailURL = in.readString();
+//    }
 
 
     public int getId() {
@@ -46,6 +72,20 @@ public class TheSteps {
     }
 
 
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(shortDescription);
+        parcel.writeString(description);
+        parcel.writeString(videoURL);
+        parcel.writeString(thumbnailURL);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }
 
 

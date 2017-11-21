@@ -115,7 +115,7 @@ public class NetworkAsyncTask extends AsyncTask<Void, Void, ArrayList<TheRecipe>
     @Override
     protected void onPostExecute(ArrayList<TheRecipe> theRecipeContent) {
         super.onPostExecute(theRecipeContent);
-        networkAsyncTaskListener.returnRecipeContent(theRecipeContent);
+        networkAsyncTaskListener.returnData(theRecipeContent);
     }
 
 }

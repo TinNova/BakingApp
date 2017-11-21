@@ -15,7 +15,7 @@ public class TheRecipe implements Parcelable{
     private String image;
 
 
-    public TheRecipe() {
+    private TheRecipe() {
     }
 
     public TheRecipe(int id, String name, ArrayList<TheIngredients> ingredients, ArrayList<TheSteps> steps, int servings, String image) {
@@ -91,4 +91,120 @@ public class TheRecipe implements Parcelable{
 
     };
 }
-
+////
+//package com.example.tin.bakingapp.Models;
+//
+//import android.os.Parcel;
+//import android.os.Parcelable;
+//
+//import java.util.ArrayList;
+//
+//public class TheRecipe implements Parcelable {
+//
+//    private int id;
+//    private String name;
+//    private ArrayList<TheIngredients> ingredients;
+//    private ArrayList<TheSteps> steps;
+//    private int servings;
+//    private String image;
+//
+//    public TheRecipe(Parcel in) {
+//        id = in.readInt();
+//        name = in.readString();
+//        ingredients = in.createTypedArrayList(TheIngredients.CREATOR);
+//        steps = in.createTypedArrayList(TheSteps.CREATOR);
+//        servings = in.readInt();
+//        image = in.readString();
+//    }
+//
+//    public TheRecipe(int recipeId, String recipeName, ArrayList<TheIngredients> ingredientList, ArrayList<TheSteps> stepsList, int recipeServings, String recipeImage) {
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel dest, int flags) {
+//        dest.writeInt(id);
+//        dest.writeString(name);
+//        dest.writeTypedList(ingredients);
+//        dest.writeTypedList(steps);
+//        dest.writeInt(servings);
+//        dest.writeString(image);
+//    }
+//
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    public static final Creator<TheRecipe> CREATOR = new Creator<TheRecipe>() {
+//        @Override
+//        public TheRecipe createFromParcel(Parcel in) {
+//            return new TheRecipe(in);
+//        }
+//
+//        @Override
+//        public TheRecipe[] newArray(int size) {
+//            return new TheRecipe[size];
+//        }
+//    };
+//
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public ArrayList<TheIngredients> getIngredients() {
+//        return ingredients;
+//    }
+//
+//    public void setIngredients(ArrayList<TheIngredients> ingredients) {
+//        this.ingredients = ingredients;
+//    }
+//
+//    public ArrayList<TheSteps> getSteps() {
+//        return steps;
+//    }
+//
+//    public void setSteps(ArrayList<TheSteps> steps) {
+//        this.steps = steps;
+//    }
+//
+//    public int getServings() {
+//        return servings;
+//    }
+//
+//    public void setServings(int servings) {
+//        this.servings = servings;
+//    }
+//
+//    public String getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(String image) {
+//        this.image = image;
+//    }
+//
+//
+//    @Override
+//    public String toString() {
+//        return "TheRecipe{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", ingredients=" + ingredients +
+//                ", steps=" + steps +
+//                ", servings=" + servings +
+//                ", image=" + image +
+//                '}';
+//    }
+//}

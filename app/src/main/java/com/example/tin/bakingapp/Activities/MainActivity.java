@@ -1,6 +1,7 @@
-package com.example.tin.bakingapp;
+package com.example.tin.bakingapp.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.example.tin.bakingapp.Adapters.TheRecipeAdapter;
 import com.example.tin.bakingapp.Models.TheRecipe;
 import com.example.tin.bakingapp.NetworkUtils.NetworkAsyncTask;
 import com.example.tin.bakingapp.NetworkUtils.NetworkAsyncTaskListener;
+import com.example.tin.bakingapp.R;
 
 import java.util.ArrayList;
 
@@ -65,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
             NetworkAsyncTask getData = new NetworkAsyncTask((NetworkAsyncTaskListener) this);
             getData.execute();
 
-
-
         } else {
             Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
 //            // Else if the connManager and networkInfo IS null, show a snakeBar informing the user
@@ -77,20 +77,39 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
         }
     }
 
+    // RecipeContent for use outside of the listener
+    private ArrayList<TheRecipe> mTheRecipeContent;
+    // Listener that returns data from the AsycTask NetworkAsyncTask
+    // This method can be used throughout the Class to deliver the returned data
     @Override
-    public void returnRecipeContent(ArrayList<TheRecipe> theRecipeContent) {
-        recipeAdapter = new TheRecipeAdapter(theRecipeContent, getApplicationContext(), MainActivity.this);
-        mRecyclerView.setAdapter(recipeAdapter);
+    public void returnData(ArrayList<TheRecipe> theRecipeContent) {
+
+        mTheRecipeContent = theRecipeContent;
+        connectAdapterToData();
 
         Log.d(TAG, "List of Recipes: " + theRecipeContent);
 
+    }
+
+    private void connectAdapterToData() {
+        recipeAdapter = new TheRecipeAdapter(mTheRecipeContent, getApplicationContext(), MainActivity.this);
+        mRecyclerView.setAdapter(recipeAdapter);
     }
 
     /** This Only Works If You Implement: implements TheRecipeAdapter.ListItemClickListener */
     @Override
     public void onListItemClick(int clickedItemIndex) {
 
+        Log.d(TAG, "List of Recipes in onListItemClick: " + mTheRecipeContent);
+
         Log.v(TAG, "clikedItemIndex" + clickedItemIndex);
         Toast.makeText(this, "ClickItemIndex: " + clickedItemIndex, Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, StepsAndDetailActivity.class);
+        //intent.putExtra("ingredients", mTheRecipeContent.get(clickedItemIndex).getIngredients());
+        //intent.putExtra("steps", mTheRecipeContent.get(clickedItemIndex).getSteps());
+        intent.putExtra("recipe", mTheRecipeContent.get(clickedItemIndex));
+
+        startActivity(intent);
     }
 }

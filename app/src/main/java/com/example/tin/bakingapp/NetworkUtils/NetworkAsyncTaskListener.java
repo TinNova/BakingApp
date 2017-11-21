@@ -9,6 +9,6 @@ import java.util.ArrayList;
  */
 
 public interface NetworkAsyncTaskListener {
-    void returnRecipeContent(ArrayList<TheRecipe> theRecipeContent);
+    void returnData(ArrayList<TheRecipe> theRecipeContent);
 
 }
