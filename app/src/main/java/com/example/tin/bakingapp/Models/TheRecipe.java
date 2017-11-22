@@ -9,24 +9,10 @@ public class TheRecipe implements Parcelable{
 
     private int id;
     private String name;
-    private ArrayList<TheIngredients> ingredients = null;
-    private ArrayList<TheSteps> steps = null;
+    private ArrayList ingredients = null;
+    private ArrayList steps = null;
     private int servings;
     private String image;
-
-
-    private TheRecipe() {
-    }
-
-    public TheRecipe(int id, String name, ArrayList<TheIngredients> ingredients, ArrayList<TheSteps> steps, int servings, String image) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.ingredients = ingredients;
-        this.steps = steps;
-        this.servings = servings;
-        this.image = image;
-    }
 
     public int getId() {
         return id;
@@ -52,10 +38,33 @@ public class TheRecipe implements Parcelable{
         return image;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIngredients(ArrayList<TheIngredients> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void setSteps(ArrayList<TheSteps> steps) {
+        this.steps = steps;
+    }
+
+    public void setServings(int servings) {
+        this.servings = servings;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     @Override
     public int describeContents() {
-        return 0;
+        return hashCode();
     }
 
     // Code For Writing A Parcel
@@ -70,26 +79,76 @@ public class TheRecipe implements Parcelable{
 
     }
 
-    // Code for Reading A Parcel
-    public final static Parcelable.Creator<TheRecipe> CREATOR
-            = new Creator<TheRecipe>() {
+    public TheRecipe (Parcel p){
+        id = p.readInt();
+        name = p.readString();
+        ingredients = p.readArrayList(com.example.tin.bakingapp.Models.TheIngredients.class.getClassLoader());
+        steps = p.readArrayList(com.example.tin.bakingapp.Models.TheSteps.class.getClassLoader());
+        servings = p.readInt();
+        image = p.readString();
+    }
 
-        public TheRecipe createFromParcel(Parcel in) {
-            TheRecipe theRecipe = new TheRecipe();
-            theRecipe.id = ((int) in.readValue((int.class.getClassLoader())));
-            theRecipe.name = ((String) in.readValue((String.class.getClassLoader())));
-            in.readList(theRecipe.ingredients, (com.example.tin.bakingapp.Models.TheIngredients.class.getClassLoader()));
-            in.readList(theRecipe.steps, (com.example.tin.bakingapp.Models.TheSteps.class.getClassLoader()));
-            theRecipe.servings = ((int) in.readValue((int.class.getClassLoader())));
-            theRecipe.image = ((String) in.readValue((String.class.getClassLoader())));
-            return theRecipe;
+
+    public TheRecipe(int recipeId, String recipeName, ArrayList<TheIngredients> ingredientList, ArrayList<TheSteps> stepsList, int recipeServings, String recipeImage) {
+    }
+
+    // We need to add a Creator
+    public final static Parcelable.Creator<TheRecipe> CREATOR = new Parcelable.Creator<TheRecipe>() {
+
+        @Override
+        public TheRecipe createFromParcel(Parcel parcel) {
+            return new TheRecipe(parcel);
         }
 
+        @Override
         public TheRecipe[] newArray(int size) {
-            return (new TheRecipe[size]);
+            return new TheRecipe[size];
         }
-
     };
+
+    @Override
+    public String toString() {
+        return "TheRecipe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", ingredients=" + ingredients +
+                ", steps=" + steps +
+                ", servings=" + servings +
+                ", image=" + image +
+                '}';
+    }
+
+//    public TheRecipe(int id, String name, ArrayList<TheIngredients> ingredients, ArrayList<TheSteps> steps, int servings, String image) {
+//        super();
+//        this.id = id;
+//        this.name = name;
+//        this.ingredients = ingredients;
+//        this.steps = steps;
+//        this.servings = servings;
+//        this.image = image;
+//    }
+//
+//
+//    // Code for Reading A Parcel
+//    public final static Parcelable.Creator<TheRecipe> CREATOR
+//            = new Creator<TheRecipe>() {
+//
+//        public TheRecipe createFromParcel(Parcel in) {
+//            TheRecipe theRecipe = new TheRecipe();
+//            theRecipe.id = ((int) in.readValue((int.class.getClassLoader())));
+//            theRecipe.name = ((String) in.readValue((String.class.getClassLoader())));
+//            in.readList(theRecipe.ingredients, (com.example.tin.bakingapp.Models.TheIngredients.class.getClassLoader()));
+//            in.readList(theRecipe.steps, (com.example.tin.bakingapp.Models.TheSteps.class.getClassLoader()));
+//            theRecipe.servings = ((int) in.readValue((int.class.getClassLoader())));
+//            theRecipe.image = ((String) in.readValue((String.class.getClassLoader())));
+//            return theRecipe;
+//        }
+//
+//        public TheRecipe[] newArray(int size) {
+//            return (new TheRecipe[size]);
+//        }
+//
+//    };
 }
 ////
 //package com.example.tin.bakingapp.Models;
