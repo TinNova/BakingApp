@@ -17,6 +17,8 @@ import com.example.tin.bakingapp.NetworkUtils.NetworkAsyncTask;
 import com.example.tin.bakingapp.NetworkUtils.NetworkAsyncTaskListener;
 import com.example.tin.bakingapp.R;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -100,15 +102,16 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
     @Override
     public void onListItemClick(int clickedItemIndex) {
 
-        Log.d(TAG, "List of Recipes in onListItemClick: " + mTheRecipeContent);
+        Log.d(TAG, "List of Recipes in onListItemClick: " + mTheRecipeContent.get(clickedItemIndex));
 
-        Log.v(TAG, "clikedItemIndex" + clickedItemIndex);
+        Log.v(TAG, "clickedItemIndex" + clickedItemIndex);
         Toast.makeText(this, "ClickItemIndex: " + clickedItemIndex, Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, StepsAndDetailActivity.class);
+        intent.putExtra("recipe", Parcels.wrap(mTheRecipeContent.get(clickedItemIndex)));
         //intent.putExtra("ingredients", mTheRecipeContent.get(clickedItemIndex).getIngredients());
         //intent.putExtra("steps", mTheRecipeContent.get(clickedItemIndex).getSteps());
-        intent.putExtra("recipe", mTheRecipeContent.get(clickedItemIndex));
+        //intent.putExtra("recipe", mTheRecipeContent.get(clickedItemIndex));
 
         startActivity(intent);
     }

@@ -59,8 +59,8 @@ public class StepsFragment extends Fragment {
         Bundle extras = getArguments();
         mIngredients = new ArrayList<>();
         mSteps = new ArrayList<>();
-        mIngredients = extras.getParcelableArrayList("argsForIngredients");
-        mSteps = extras.getParcelableArrayList("argsForSteps");
+//        mIngredients = extras.getParcelableArrayList("argsForIngredients");
+//        mSteps = extras.getParcelableArrayList("argsForSteps");
 
         stepsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         ingredientsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

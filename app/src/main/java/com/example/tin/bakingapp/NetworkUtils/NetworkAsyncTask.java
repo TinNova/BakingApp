@@ -27,7 +27,7 @@ public class NetworkAsyncTask extends AsyncTask<Void, Void, ArrayList<TheRecipe>
 
     @Override
     protected ArrayList<TheRecipe> doInBackground(Void... voids) {
-        // Initialise the Model Class TheRecipe and name it "recipeList"
+        // Initialise the Model Class TheRecipe and name it "theRecipeContent"
         ArrayList<TheRecipe> theRecipeContent = new ArrayList<>();
         /** Initialise the data we got from the BAKING_APP_URL and name it "recipeJsonArray" */
         JSONArray recipeJsonArray = NetworkConnection.getRecipeData();

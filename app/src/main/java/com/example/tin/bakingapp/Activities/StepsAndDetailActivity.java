@@ -13,6 +13,8 @@ import com.example.tin.bakingapp.Models.TheRecipe;
 import com.example.tin.bakingapp.Models.TheSteps;
 import com.example.tin.bakingapp.R;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 
 public class StepsAndDetailActivity extends AppCompatActivity {
@@ -38,7 +40,7 @@ public class StepsAndDetailActivity extends AppCompatActivity {
 
 
         // Here we've taken the Extra containing the the "TheRecipe" Model and put it in the variable "mTheRecipe"
-        mTheRecipe = intentThatStartedThisActivity.getParcelableExtra("recipe");
+        mTheRecipe = Parcels.unwrap(intentThatStartedThisActivity.getParcelableExtra("recipe"));
 
         // Here we are using a for loop to extract the "TheSteps" Model from mTheRecipe and we are
         // saving it in an ArrayList variable call "theStepsList"
