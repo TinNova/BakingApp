@@ -16,6 +16,7 @@ import com.example.tin.bakingapp.R;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StepsAndDetailActivity extends AppCompatActivity {
 
@@ -25,7 +26,8 @@ public class StepsAndDetailActivity extends AppCompatActivity {
 //    ArrayList<TheIngredients> ingredientsList;
 
 //    android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-    TheRecipe mTheRecipe;
+
+    private ArrayList<TheRecipe> mTheRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +40,8 @@ public class StepsAndDetailActivity extends AppCompatActivity {
 //        stepsList = intentThatStartedThisActivity.getParcelableArrayListExtra("steps");
 //        ingredientsList = intentThatStartedThisActivity.getParcelableArrayListExtra("ingredients");
 
-
         // Here we've taken the Extra containing the the "TheRecipe" Model and put it in the variable "mTheRecipe"
-        mTheRecipe = Parcels.unwrap(intentThatStartedThisActivity.getParcelableExtra("recipe"));
+        mTheRecipe = intentThatStartedThisActivity.getParcelableExtra("recipe");
 
         // Here we are using a for loop to extract the "TheSteps" Model from mTheRecipe and we are
         // saving it in an ArrayList variable call "theStepsList"

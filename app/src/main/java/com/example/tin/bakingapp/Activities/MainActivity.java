@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
         Toast.makeText(this, "ClickItemIndex: " + clickedItemIndex, Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, StepsAndDetailActivity.class);
-        intent.putExtra("recipe", Parcels.wrap(mTheRecipeContent.get(clickedItemIndex)));
+        intent.putExtra("recipe", mTheRecipeContent.get(clickedItemIndex));
         //intent.putExtra("ingredients", mTheRecipeContent.get(clickedItemIndex).getIngredients());
         //intent.putExtra("steps", mTheRecipeContent.get(clickedItemIndex).getSteps());
         //intent.putExtra("recipe", mTheRecipeContent.get(clickedItemIndex));
