@@ -48,10 +48,10 @@ public class TheRecipe implements Parcelable {
     public TheRecipe(Parcel in) {
         id = in.readInt();
         name = in.readString();
-        in.readList(ingredients, (com.example.tin.bakingapp.Models.TheIngredients.class.getClassLoader()));
-        //ingredients = in.createTypedArrayList(TheIngredients.CREATOR);
-        in.readList(steps, (com.example.tin.bakingapp.Models.TheIngredients.class.getClassLoader()));
-        //steps = in.createTypedArrayList(TheSteps.CREATOR);
+        //in.readList(ingredients, (com.example.tin.bakingapp.Models.TheIngredients.class.getClassLoader()));
+        ingredients = in.createTypedArrayList(TheIngredients.CREATOR);
+        //in.readList(steps, (com.example.tin.bakingapp.Models.TheSteps.class.getClassLoader()));
+        steps = in.createTypedArrayList(TheSteps.CREATOR);
         servings = in.readInt();
         image = in.readString();
     }

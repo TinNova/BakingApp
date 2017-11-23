@@ -17,8 +17,6 @@ import com.example.tin.bakingapp.NetworkUtils.NetworkAsyncTask;
 import com.example.tin.bakingapp.NetworkUtils.NetworkAsyncTaskListener;
 import com.example.tin.bakingapp.R;
 
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -29,8 +27,8 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
     private static final String TAG = MainActivity.class.getSimpleName();
 
     // Needed for the RecyclerView
-    // This will be used to attach the RecyclerView to the MovieAdapter
-    @BindView(R.id.recyclerView_cakes) RecyclerView mRecyclerView;
+    // This will be used to attach the RecyclerView to the Adapter
+    @BindView(R.id.recyclerView_recipes) RecyclerView mRecyclerView;
     private RecyclerView.Adapter recipeAdapter;
 
     // Used to check if the device has internet connection
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        /** Setting Up The RecyclerView to Display All of The Cakes/Pies In the App */
+        /** Setting Up The RecyclerView to Display All of The Recipes In the App */
         // This will improve performance by stating that changes in the content will not change
         // the child layout size in the RecyclerView
         mRecyclerView.setHasFixedSize(true);
@@ -98,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
         mRecyclerView.setAdapter(recipeAdapter);
     }
 
-    /** This Only Works If You Implement: implements TheRecipeAdapter.ListItemClickListener */
+    /** This Only Works If You Implement: implements TheRecipeAdapter.ListItemClickListener to this Class */
     @Override
     public void onListItemClick(int clickedItemIndex) {
 

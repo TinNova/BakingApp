@@ -28,6 +28,8 @@ public class StepsAndDetailActivity extends AppCompatActivity {
 //    android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
     private ArrayList<TheRecipe> mTheRecipe;
+    private ArrayList<TheIngredients> ingredients;
+    private ArrayList<TheSteps> steps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +43,13 @@ public class StepsAndDetailActivity extends AppCompatActivity {
 //        ingredientsList = intentThatStartedThisActivity.getParcelableArrayListExtra("ingredients");
 
         // Here we've taken the Extra containing the the "TheRecipe" Model and put it in the variable "mTheRecipe"
-        mTheRecipe = intentThatStartedThisActivity.getParcelableExtra("recipe");
-
+        if (intentThatStartedThisActivity.hasExtra("recipe")) {
+            mTheRecipe = intentThatStartedThisActivity.getParcelableExtra("recipe");
+            Log.v(TAG, "The Recipe inside mTheRecipe With Data" + mTheRecipe);
+        } else {
+            mTheRecipe = null;
+            Log.v(TAG, "The Recipe inside mTheRecipe Null" + mTheRecipe);
+        }
         // Here we are using a for loop to extract the "TheSteps" Model from mTheRecipe and we are
         // saving it in an ArrayList variable call "theStepsList"
 //        ArrayList<Object> theStepsList = new ArrayList<>();
