@@ -16,17 +16,21 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-/**
- * Created by Tin on 21/11/2017.
- */
+
 public class TheStepsAdapter extends RecyclerView.Adapter<TheStepsAdapter.ViewHolder> {
 
     private final ArrayList<TheSteps> mStepsList;
     private final Context mContext;
+    private TheStepsClickListener mClickListener;
 
-    public TheStepsAdapter(ArrayList<TheSteps> stepsList, Context context) {
+    public interface TheStepsClickListener {
+        void onClick(int position);
+    }
+
+    public TheStepsAdapter(ArrayList<TheSteps> stepsList, Context context, TheStepsClickListener listener) {
         this.mStepsList = stepsList;
         this.mContext = context;
+        this.mClickListener = listener;
 
     }
 
@@ -39,6 +43,7 @@ public class TheStepsAdapter extends RecyclerView.Adapter<TheStepsAdapter.ViewHo
         // Create a new View and inflate the list_item Layout into it
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.steps_list_item, viewGroup, false);
+        // Return the view just created
         return new TheStepsAdapter.ViewHolder(v);
     }
 
@@ -51,7 +56,7 @@ public class TheStepsAdapter extends RecyclerView.Adapter<TheStepsAdapter.ViewHo
      * @param position The position of the item within the adapter's data set.
      */
     @Override
-    public void onBindViewHolder(TheStepsAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
         TheSteps theSteps = mStepsList.get(position);
 
@@ -66,14 +71,21 @@ public class TheStepsAdapter extends RecyclerView.Adapter<TheStepsAdapter.ViewHo
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvShortDescription;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            tvShortDescription = (TextView) itemView.findViewById(R.id.short_description);
+            tvShortDescription = itemView.findViewById(R.id.short_description);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            mClickListener.onClick(position);
         }
     }
 }

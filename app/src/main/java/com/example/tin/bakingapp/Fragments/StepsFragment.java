@@ -2,13 +2,17 @@ package com.example.tin.bakingapp.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.tin.bakingapp.Activities.StepsAndDetailActivity;
 import com.example.tin.bakingapp.Adapters.TheIngredientsAdapter;
 import com.example.tin.bakingapp.Adapters.TheStepsAdapter;
 import com.example.tin.bakingapp.Models.TheIngredients;
@@ -17,12 +21,17 @@ import com.example.tin.bakingapp.R;
 
 import java.util.ArrayList;
 
+import static android.widget.Toast.*;
+import static java.lang.String.*;
+
 
 /**
  * Created by Tin on 19/11/2017.
  */
 
-public class StepsFragment extends Fragment {
+public class StepsFragment extends Fragment implements TheStepsAdapter.TheStepsClickListener{
+
+    private static final String TAG = StepsFragment.class.getSimpleName();
 
     ArrayList<TheIngredients> mIngredients;
     ArrayList<TheSteps> mSteps;
@@ -40,12 +49,20 @@ public class StepsFragment extends Fragment {
     public StepsFragment(){
 
     }
+//
+//    // This happens before the onCreateView happens
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//
+//
+//    }
 
     // Inflates the fragment layout and sets any image resources
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
         View rootView = inflater.inflate(R.layout.fragment_steps, container, false);
@@ -56,25 +73,36 @@ public class StepsFragment extends Fragment {
          * 3. We need to setup the tv's & iv's to hold the data */
 
         // Extracting the data from the Bundle
-        Bundle extras = getArguments();
+        Bundle getExtras = getArguments();
         mIngredients = new ArrayList<>();
         mSteps = new ArrayList<>();
-//        mIngredients = extras.getParcelableArrayList("argsForIngredients");
-//        mSteps = extras.getParcelableArrayList("argsForSteps");
+        mIngredients = getExtras.getParcelableArrayList(StepsAndDetailActivity.INGREDIENTS_BUNDLED);
+        mSteps = getExtras.getParcelableArrayList(StepsAndDetailActivity.STEPS_BUNDLED);
 
-        stepsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+
         ingredientsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-
-        stepsRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView_steps);
-        stepsRecyclerView.setHasFixedSize(true);
-
         ingredientsRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView_ingredients);
         ingredientsRecyclerView.setHasFixedSize(true);
+        ingredientsRecyclerView.setLayoutManager(ingredientsLayoutManager);
+        mIngredientsAdapter = new TheIngredientsAdapter(mIngredients, getContext());
+        ingredientsRecyclerView.setAdapter(mIngredientsAdapter);
 
-        //mIngredientsAdapter = new TheIngredientsAdapter(mIngredients, getContext());
-        mStepsAdapter = new TheStepsAdapter(mSteps, getContext());
-
+        stepsLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        stepsRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView_steps);
+        stepsRecyclerView.setHasFixedSize(true);
+        stepsRecyclerView.setLayoutManager(stepsLayoutManager);
+        mStepsAdapter = new TheStepsAdapter(mSteps, getContext(), StepsFragment.this);
+        stepsRecyclerView.setAdapter(mStepsAdapter);
 
         return rootView;
+    }
+
+    @Override
+    public void onClick(int position) {
+
+        //Toast.makeText(this, "Position clicked on: " + mSteps.get(position), Toast.LENGTH_SHORT).show();
+        Log.v(TAG, "Position Clicked On: " + mSteps.get(position));
+
+
     }
 }
