@@ -6,14 +6,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.tin.bakingapp.Models.TheSteps;
 import com.example.tin.bakingapp.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by Tin on 20/11/2017.
  */
 
 public class DetailFragment extends Fragment {
+
+    ArrayList<TheSteps> mSteps;
+
+    int mPosition;
+
+    TextView tvStepDescription;
 
     // Mandatory Constructor for initiating the fragment
     public DetailFragment(){
@@ -26,9 +36,18 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
+        // Extracting the data from the Bundle
+        Bundle getExtras = getArguments();
+        mSteps = new ArrayList<>();
+        mSteps = getExtras.getParcelableArrayList(StepsFragment.CURRENT_STEP);
+        mPosition = getExtras.getInt(StepsFragment.CURRENT_POSITION);
+
+
+        // Setting up the UI
+        tvStepDescription = rootView.findViewById(R.id.step_description);
+        tvStepDescription.setText(mSteps.get(mPosition).getDescription());
 
         return rootView;
     }

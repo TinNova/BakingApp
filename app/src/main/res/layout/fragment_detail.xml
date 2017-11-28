@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/linearLayoutDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+            android:id="@+id/exoPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
+
+        <ImageView
+            android:id="@+id/no_video_img"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:background="@color/cardview_dark_background"
+            android:contentDescription="TODO"
+            android:visibility="gone" />
+
+        <!--If there isn't a VideoUrl but there is an image, this
+        ImageView will be VISIBLE-->
+        <ImageView
+            android:id="@+id/detail_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Video" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="184dp" />
+
+        <TextView
+            android:id="@+id/step_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="203dp" />
+
+    </LinearLayout>
+
+</ScrollView>

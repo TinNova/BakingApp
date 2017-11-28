@@ -2,27 +2,20 @@ package com.example.tin.bakingapp.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.tin.bakingapp.Fragments.DetailFragment;
 import com.example.tin.bakingapp.Fragments.StepsFragment;
 import com.example.tin.bakingapp.Models.TheIngredients;
-import com.example.tin.bakingapp.Models.TheRecipe;
 import com.example.tin.bakingapp.Models.TheSteps;
 import com.example.tin.bakingapp.R;
 
-import org.parceler.Parcels;
-
 import java.util.ArrayList;
-import java.util.List;
 
-public class StepsAndDetailActivity extends AppCompatActivity {
+public class StepsAndIngredientsActivity extends AppCompatActivity {
 
-    private static final String TAG = StepsAndDetailActivity.class.getSimpleName();
+    private static final String TAG = StepsAndIngredientsActivity.class.getSimpleName();
 
     public static String INGREDIENTS_BUNDLED = "argsForIngredients";
     public static String STEPS_BUNDLED = "argsForSteps";
@@ -30,7 +23,6 @@ public class StepsAndDetailActivity extends AppCompatActivity {
     ArrayList<TheSteps> mTheSteps;
     ArrayList<TheIngredients> mTheIngredients;
 
-    FragmentManager fragmentManager;
     StepsFragment mStepsFragment;
 
 
@@ -48,7 +40,11 @@ public class StepsAndDetailActivity extends AppCompatActivity {
         Log.v(TAG, "The Ingredients inside mTheIngredients: " + mTheIngredients);
         Log.v(TAG, "The Steps inside mTheSteps:" + mTheSteps);
 
-        inflateStepsFragment();
+        // Only create a new fragment if there is no previously saved state!
+        if (savedInstanceState == null) {
+
+            inflateStepsFragment();
+        }
     }
 
     //inflateStepsFragment();
@@ -75,6 +71,8 @@ public class StepsAndDetailActivity extends AppCompatActivity {
         argsForIngredientsSteps.putParcelableArrayList(INGREDIENTS_BUNDLED, mTheIngredients);
         argsForIngredientsSteps.putParcelableArrayList(STEPS_BUNDLED, mTheSteps);
 
+        // If we have successfully passed the selected TheIngredient to this activity, begin the
+        // transaction to start the StepsFragment
         if (mTheIngredients != null) {
 
             // Initialise the StepsFragment

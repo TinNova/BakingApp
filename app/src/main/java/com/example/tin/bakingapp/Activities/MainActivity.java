@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private static final String DATA_KEY = "data_key";
+
     // Needed for the RecyclerView
     // This will be used to attach the RecyclerView to the Adapter
     @BindView(R.id.recyclerView_recipes) RecyclerView mRecyclerView;
@@ -34,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
     // Used to check if the device has internet connection
     ConnectivityManager connectionManager;
     NetworkInfo networkInfo;
+
+    // RecipeContent for use outside of the listener
+    private ArrayList<TheRecipe> mTheRecipeContent;
 
 
 
@@ -58,27 +64,44 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
 
-        // Checking If The Device Is Connected To The Internet
-        connectionManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        // If the connManager and networkInfo is NOT null, launch the AsyncTask
-        if (connectionManager != null)
-            networkInfo = connectionManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            NetworkAsyncTask getData = new NetworkAsyncTask((NetworkAsyncTaskListener) this);
-            getData.execute();
+        // If There isn't a savedInstanceState, Download The Data And Build The RecyclerView
+        if (savedInstanceState == null) {
+            Log.v(TAG, "Data is loading");
 
-        } else {
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            // Checking If The Device Is Connected To The Internet
+            connectionManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            // If the connManager and networkInfo is NOT null, launch the AsyncTask
+            if (connectionManager != null)
+                networkInfo = connectionManager.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+                NetworkAsyncTask getData = new NetworkAsyncTask((NetworkAsyncTaskListener) this);
+                getData.execute();
+
+            } else {
+                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
 //            // Else if the connManager and networkInfo IS null, show a snakeBar informing the user
 //            Snackbar snackbar = Snackbar.make(mNavigationView, getString(R.string.check_connection), Snackbar.LENGTH_LONG);
 //            View snackBarView = snackbar.getView();
 //            snackBarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
 //            snackbar.show();
+            }
+
+            // If there is a savedInstanceState, don't do anything as the data and RecyclerView is there already
+        } else {
+            // Get TheRecipe list that's saved in savedInstanceState and add it to the variable mTheRecipeContent
+            mTheRecipeContent = savedInstanceState.getParcelableArrayList(DATA_KEY);
+
+            // Pass the mTheRecipeContent into the recipeAdapter to create the RecyclerView
+            recipeAdapter = new TheRecipeAdapter(mTheRecipeContent, getApplicationContext(), MainActivity.this);
+            mRecyclerView.setAdapter(recipeAdapter);
+
+            // Test to see if savedInstanceState is being saved
+            Log.v(TAG, "SavedInstanceState Discovered, Don't Reload Data");
+
         }
     }
 
-    // RecipeContent for use outside of the listener
-    private ArrayList<TheRecipe> mTheRecipeContent;
+
     // Listener that returns data from the AsycTask NetworkAsyncTask
     // This method can be used throughout the Class to deliver the returned data
     @Override
@@ -91,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
 
     }
 
+    // Code which put the mTheRecipeContent into the Adapter to create the RecyclerView
     private void connectAdapterToData() {
         recipeAdapter = new TheRecipeAdapter(mTheRecipeContent, getApplicationContext(), MainActivity.this);
         mRecyclerView.setAdapter(recipeAdapter);
@@ -105,11 +129,25 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
         Log.v(TAG, "clickedItemIndex" + clickedItemIndex);
         Toast.makeText(this, "ClickItemIndex: " + clickedItemIndex, Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(this, StepsAndDetailActivity.class);
+        Intent intent = new Intent(this, StepsAndIngredientsActivity.class);
         intent.putParcelableArrayListExtra("steps", mTheRecipeContent.get(clickedItemIndex).getSteps());
         intent.putParcelableArrayListExtra("ingredients", mTheRecipeContent.get(clickedItemIndex).getIngredients());
 
 
         startActivity(intent);
     }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // Saving theRecipeContent to be reused should the device rotate or return to this activity
+        outState.putParcelableArrayList(DATA_KEY, mTheRecipeContent);
+        super.onSaveInstanceState(outState);
+    }
+
 }
+
+//(COMPLETED) 1: Setup the SavedInstanceStates Everywhere, Watch on the Fragments videos how to do this Video 15. "Responding To Clicks"
+//TODO 2: Setup the video player
+//TODO 3: Setup the logic to check if there is an image or if there is a video before playing it
+//TODO 4: Set it up to work on tablet mode

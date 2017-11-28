@@ -23,8 +23,11 @@ public class TheStepsAdapter extends RecyclerView.Adapter<TheStepsAdapter.ViewHo
     private final Context mContext;
     private TheStepsClickListener mClickListener;
 
+    // Interface that sends information to the StepsFragment
+    // We need to send back to the StepsFragment the position and the step that was clicked on
+    // ? Do we actually need the position? Surely only the step matters...If we have the step why do we need the position?
     public interface TheStepsClickListener {
-        void onClick(int position);
+        void onClick(int position, TheSteps theSteps);
     }
 
     public TheStepsAdapter(ArrayList<TheSteps> stepsList, Context context, TheStepsClickListener listener) {
@@ -57,10 +60,18 @@ public class TheStepsAdapter extends RecyclerView.Adapter<TheStepsAdapter.ViewHo
      */
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-
+        // Here we define that we want the viewHolder to hold only the list of the step that we are
+        // currently on, i.e .get(position)
         TheSteps theSteps = mStepsList.get(position);
 
+        // Here we are getting the ShortDescription from this current step and setting it to the
+        // TextView tvShortDescription
         viewHolder.tvShortDescription.setText(theSteps.getShortDescription());
+
+        // Here we are getting the current step and setting it to the ArrayList mCurrentStep so it
+        // can be passed to the onClickListener in order to allow us to pass it back to the
+        // StepsFragment where it can be used to launch the DetailFragment
+        viewHolder.mCurrentStep = theSteps;
     }
 
 
@@ -74,18 +85,21 @@ public class TheStepsAdapter extends RecyclerView.Adapter<TheStepsAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvShortDescription;
+        TheSteps mCurrentStep;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             tvShortDescription = itemView.findViewById(R.id.short_description);
+            // Here we are ensuring that the OnClickListener is taking the click of this itemView
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            int position = getAdapterPosition();
-            mClickListener.onClick(position);
+
+            // Here we are passing in the position and mCurrentStep
+            mClickListener.onClick(getAdapterPosition(), mCurrentStep);
         }
     }
 }

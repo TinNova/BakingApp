@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.example.tin.bakingapp.Activities.StepsAndDetailActivity">
+    tools:context="com.example.tin.bakingapp.Activities.StepsAndIngredientsActivity">
 
     <!--FrameLayout to hold fragment_step-->
     <FrameLayout
@@ -12,11 +12,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerInside" />
-
-    <!--<FrameLayout-->
-        <!--android:id="@+id/detail_container"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="180dp"-->
-        <!--android:scaleType="centerInside" />-->
 
 </LinearLayout>
