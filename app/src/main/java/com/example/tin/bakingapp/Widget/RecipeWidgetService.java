@@ -4,9 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.example.tin.bakingapp.Activities.MainActivity;
+import com.example.tin.bakingapp.Models.TheIngredients;
+import com.example.tin.bakingapp.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
@@ -24,12 +29,12 @@ public class RecipeWidgetService extends RemoteViewsService {
     private class RecipeServiceFactory implements RemoteViewsService.RemoteViewsFactory {
 
         private Context context;
-        private ArrayList<Ingredients> mIngredientsList;
+        private ArrayList<TheIngredients> mTheIngredients;
 
         RecipeServiceFactory(Context context) {
             this.context = context;
-            mIngredientsList = new ArrayList<>();
-            mIngredientsList.add(new Ingredients(4, "BLAH", "ROLL"));
+            mTheIngredients = new ArrayList<>();
+            mTheIngredients.add(new TheIngredients(1, "ml", "milk"));
         }
 
 
@@ -39,11 +44,12 @@ public class RecipeWidgetService extends RemoteViewsService {
 
         @Override
         public void onDataSetChanged() {
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            String json = preferences.getString(MainActivity.SHARED_PREFS_KEY, "");
-            if (!json.equals("")) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            String theIngredientsJson = sharedPreferences.getString(MainActivity.SHARED_PREFERENCES_KEY, "");
+            if (!theIngredientsJson.equals("")) {
+
                 Gson gson = new Gson();
-                mIngredientsList = gson.fromJson(json, new TypeToken<ArrayList<Ingredients>>() {
+                mTheIngredients = gson.fromJson(theIngredientsJson, new TypeToken<ArrayList<TheIngredients>>() {
                 }.getType());
             }
         }
@@ -55,17 +61,17 @@ public class RecipeWidgetService extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            if (mIngredientsList != null) {
-                return mIngredientsList.size();
+            if (mTheIngredients != null) {
+                return mTheIngredients.size();
             } else return 0;
         }
 
         @Override
         public RemoteViews getViewAt(int i) {
-            RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.recipe_widget_item);
-            rv.setTextViewText(R.id.appwidget_text_name, String.valueOf(mIngredientsList.get(i).getIngredient()));
-            rv.setTextViewText(R.id.appwidget_text_measure, String.valueOf(mIngredientsList.get(i).getMeasure()));
-            rv.setTextViewText(R.id.appwidget_text_quantity, String.valueOf(mIngredientsList.get(i).getQuantity()));
+            RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_ingredients_item);
+            rv.setTextViewText(R.id.widget_ingredient_tv, String.valueOf(mTheIngredients.get(i).getIngredient()));
+            rv.setTextViewText(R.id.widget_measure_tv, String.valueOf(mTheIngredients.get(i).getMeasure()));
+            rv.setTextViewText(R.id.widget_quantity_tv, String.valueOf(mTheIngredients.get(i).getQuantity()));
             return rv;
         }
 

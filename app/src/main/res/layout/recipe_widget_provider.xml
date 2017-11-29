@@ -36,12 +36,12 @@
             android:dividerHeight="0dp"
             tools:listitem="" />
 
-        <TextView
-            android:id="@+id/widget_noRecipe"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/click_to_add" />
+        <!--<TextView-->
+            <!--android:id="@+id/widget_noRecipe"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/click_to_add" />-->
 
     </FrameLayout>
 </LinearLayout>

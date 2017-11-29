@@ -46,6 +46,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     //ExoPlayer Dependency
     compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
-
+    //For Converting TheIngredients To Gson and Back To An Array For The Widget
+    compile 'com.google.code.gson:gson:2.8.1'
 
 }

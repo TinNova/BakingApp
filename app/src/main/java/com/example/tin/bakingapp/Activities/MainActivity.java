@@ -2,10 +2,11 @@ package com.example.tin.bakingapp.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +14,15 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.tin.bakingapp.Adapters.TheRecipeAdapter;
+import com.example.tin.bakingapp.Models.TheIngredients;
 import com.example.tin.bakingapp.Models.TheRecipe;
 import com.example.tin.bakingapp.NetworkUtils.NetworkAsyncTask;
 import com.example.tin.bakingapp.NetworkUtils.NetworkAsyncTaskListener;
 import com.example.tin.bakingapp.R;
+import com.example.tin.bakingapp.Widget.RecipeWidgetProvider;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -28,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private static final String DATA_KEY = "data_key";
+    public static final String SHARED_PREFERENCES_KEY = "shared_preferences_key";
 
     // Needed for the RecyclerView
     // This will be used to attach the RecyclerView to the Adapter
@@ -40,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
 
     // RecipeContent for use outside of the listener
     private ArrayList<TheRecipe> mTheRecipeContent;
+    private ArrayList<TheIngredients> mTheIngredients;
 
 
 
@@ -133,7 +141,11 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
         intent.putParcelableArrayListExtra("steps", mTheRecipeContent.get(clickedItemIndex).getSteps());
         intent.putParcelableArrayListExtra("ingredients", mTheRecipeContent.get(clickedItemIndex).getIngredients());
 
+        // Getting Ingredients To Be Passed To The Widget
+        mTheIngredients = mTheRecipeContent.get(clickedItemIndex).getIngredients();
+        passTheIngredientsToWidgetProvider(mTheIngredients);
 
+        //passTheIngredientsToWidgetProvider(quantity, ingredient, measure);
         startActivity(intent);
     }
 
@@ -145,6 +157,28 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
         super.onSaveInstanceState(outState);
     }
 
+    // Takes ClickedOn TheIngredients ArrayList And Converts It To Json
+    // Then Passes The Json To The RecipeWidgetService, this will display the selected ingredients
+    // in the Widget
+    private void passTheIngredientsToWidgetProvider(ArrayList<TheIngredients> theIngredients) {
+        // Initialise a Gson
+        Gson gson = new Gson();
+        // Convert theIngredients to a Json using the Gson Library
+        String theIngredientsjson = gson.toJson(theIngredients);
+        // Initialise SharedPreferences
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        // Pass in theIngredients in Json format
+        editor.putString(SHARED_PREFERENCES_KEY, theIngredientsjson).apply();
+
+        sendBroadcast();
+    }
+
+    private void sendBroadcast() {
+        Intent intent = new Intent(this, RecipeWidgetProvider.class);
+        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE\"");
+        sendBroadcast(intent);
+    }
 }
 
 //(COMPLETED) 1: Setup the SavedInstanceStates Everywhere, Watch on the Fragments videos how to do this Video 15. "Responding To Clicks"
