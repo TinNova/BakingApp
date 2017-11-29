@@ -174,14 +174,10 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
         sendBroadcast();
     }
 
+    //TODO: I THINK THE WIDGET IS NOT UPDATING BECAUSE OF THE "setAction()" METHOD, DOUBLE CHECK THAT uri!
     private void sendBroadcast() {
         Intent intent = new Intent(this, RecipeWidgetProvider.class);
         intent.setAction("android.appwidget.action.APPWIDGET_UPDATE\"");
         sendBroadcast(intent);
     }
 }
-
-//(COMPLETED) 1: Setup the SavedInstanceStates Everywhere, Watch on the Fragments videos how to do this Video 15. "Responding To Clicks"
-//TODO 2: Setup the video player
-//TODO 3: Setup the logic to check if there is an image or if there is a video before playing it
-//TODO 4: Set it up to work on tablet mode
