@@ -21,6 +21,8 @@ import com.example.tin.bakingapp.R;
 
 import java.util.ArrayList;
 
+import static com.example.tin.bakingapp.Activities.StepsAndIngredientsActivity.TWO_PANE;
+
 
 /**
  * Created by Tin on 19/11/2017.
@@ -39,6 +41,7 @@ public class StepsFragment extends Fragment implements TheStepsAdapter.TheStepsC
 
     ArrayList<TheIngredients> mIngredients;
     ArrayList<TheSteps> mSteps;
+    boolean mTwoPane;
 
     LinearLayoutManager stepsLayoutManager;
     LinearLayoutManager ingredientsLayoutManager;
@@ -74,9 +77,11 @@ public class StepsFragment extends Fragment implements TheStepsAdapter.TheStepsC
         mIngredients = new ArrayList<>();
         mSteps = new ArrayList<>();
 
+        // Extracting the Ingredients, Steps & TwoPane Boolean
         Bundle getExtras = getArguments();
         mIngredients = getExtras.getParcelableArrayList(StepsAndIngredientsActivity.INGREDIENTS_BUNDLED);
         mSteps = getExtras.getParcelableArrayList(StepsAndIngredientsActivity.STEPS_BUNDLED);
+        mTwoPane = getExtras.getBoolean(TWO_PANE);
 
         Log.v(TAG, "TheIngredients & TheSteps Taken From MainActivity Bundle");
 
@@ -103,40 +108,38 @@ public class StepsFragment extends Fragment implements TheStepsAdapter.TheStepsC
     public void onClick(int position, TheSteps theStepsModel) {
 
         //TODO: The commented out code could be used to launch the fragment when in tablet mode
-        // Try starting the DetailFragment FragmentTransaction directly inside this method
-        // if it fails, Try sending the data to the StepsAndIngredientsActivity then starting the DetailFragment FragmentTransaction from there
+        // If the device has a minimum width of 600dp inflate the DetailFragment within the
+        // StepsAndIngredientsActivity
 
-//        // Creating a Bundle to hold the ingredientsList & stepsList
-//        Bundle argsForCurrentStep = new Bundle();
-//        argsForCurrentStep.putParcelableArrayList(CURRENT_STEP, mSteps);
-//        argsForCurrentStep.putInt(CURRENT_POSITION, position);
-//
-//        // Initialise the StepsFragment
-//        mDetailFragment = new DetailFragment();
-//        // Placing the Bundle Arguments into the stepsFragment
-//        mDetailFragment.setArguments(argsForCurrentStep);
-//
-//        // Start inflate the StepsFragment (?Why can this be getFragmentManager, but in StepsAndIngredientsActivity it's getSupportFragmentManager?)
-//        getFragmentManager().beginTransaction()
-//                .add(R.id.detail_container, mDetailFragment)
-//                .commit();
+        if (mTwoPane == true) {
+            // Creating a Bundle to hold the ingredientsList & stepsList
+            Bundle argsForCurrentStep = new Bundle();
+            argsForCurrentStep.putParcelableArrayList(CURRENT_STEP, mSteps);
+            argsForCurrentStep.putInt(CURRENT_POSITION, position);
 
-        Intent i = new Intent(getContext(), DetailActivity.class);
-        i.putParcelableArrayListExtra(CURRENT_STEP, mSteps);
-        i.putExtra(CURRENT_POSITION, position);
-        startActivity(i);
+            // Initialise the StepsFragment
+            mDetailFragment = new DetailFragment();
+            // Placing the Bundle Arguments into the stepsFragment
+            mDetailFragment.setArguments(argsForCurrentStep);
+
+            // Start inflate the StepsFragment (?Why can this be getFragmentManager, but in StepsAndIngredientsActivity it's getSupportFragmentManager?)
+            getFragmentManager().beginTransaction()
+                    .add(R.id.detail_container, mDetailFragment)
+                    .commit();
+
+            // Else launch an intent to the DetailActivity where the Fragment will be inflated
+        } else {
+
+            Intent i = new Intent(getContext(), DetailActivity.class);
+            i.putParcelableArrayListExtra(CURRENT_STEP, mSteps);
+            i.putExtra(CURRENT_POSITION, position);
+            startActivity(i);
+        }
 
 
         Log.v(TAG, "Position Clicked On: " + mSteps.get(position));
     }
 
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        // Saving TheIngredients & TheSteps to be reused should the device rotate or return to this activity
-//        outState.putParcelableArrayList(INGREDIENTS_KEY, mIngredients);
-//        outState.putParcelableArrayList(STEPS_KEY, mSteps);
-//        super.onSaveInstanceState(outState);
-//    }
 }
 
 //TODO: On App Rotation it runs the onCreateView more and more times, test it out with the LOG: "TheIngredients & TheSteps Taken From MainActivity Bundle"

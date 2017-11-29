@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.tin.bakingapp.Fragments.DetailFragment;
 import com.example.tin.bakingapp.Fragments.StepsFragment;
 import com.example.tin.bakingapp.Models.TheIngredients;
 import com.example.tin.bakingapp.Models.TheSteps;
@@ -19,17 +20,35 @@ public class StepsAndIngredientsActivity extends AppCompatActivity {
 
     public static String INGREDIENTS_BUNDLED = "argsForIngredients";
     public static String STEPS_BUNDLED = "argsForSteps";
+    public static String TWO_PANE = "argsForTwoPain";
+
+    // mTwoPan tells us if the device has a minimum width of 600dp
+    private boolean mTwoPane;
 
     ArrayList<TheSteps> mTheSteps;
     ArrayList<TheIngredients> mTheIngredients;
 
     StepsFragment mStepsFragment;
+    DetailFragment mDetailFragment;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_steps_and_detail);
+
+        // If the activity_steps_and_detail layout contains the container "detail_container" it means
+        // the minimum screen width is 600dp, therefore we are in twoPane mode
+        if (findViewById(R.id.detail_container) !=null){
+
+            // if true, inflate the StepsFragment & the DetailFragment into this activity
+            mTwoPane = true;
+
+        } else {
+
+            // if false, only inflate the StepsFragment
+            mTwoPane = false;
+        }
 
         Intent intentThatStartedThisActivity = getIntent();
 
@@ -41,28 +60,14 @@ public class StepsAndIngredientsActivity extends AppCompatActivity {
         Log.v(TAG, "The Steps inside mTheSteps:" + mTheSteps);
 
         // Only create a new fragment if there is no previously saved state!
+        // If there savedInstanceState is NOT null then do nothing as the Fragment is already inflated
         if (savedInstanceState == null) {
 
             inflateStepsFragment();
         }
+
     }
 
-    //inflateStepsFragment();
-    /** IF (ON MOBILE & THE MAIN ACTIVITY LAUNCHED THIS ACTIVITY) {
-     *      Inflate the inflateStepsFragment
-     *      }
-     *      ELSE IF (ON TABLET & THE MAIN ACTIVITY LAUNCHED THIS ACTIVITY {
-     *          Start the tablet version
-     *          }
-     */
-
-
-    /**
-     * REQUIRED METHOD,
-     * If user selects a step, we need to replace the stepsFragment with the
-     * detail fragment
-     * The if user presses UP button, they should return to the stepsFragment
-     */
 
     // Ingredients & Steps Data Goes Into TheStepsFragment
     private void inflateStepsFragment() {
@@ -70,6 +75,7 @@ public class StepsAndIngredientsActivity extends AppCompatActivity {
         Bundle argsForIngredientsSteps = new Bundle();
         argsForIngredientsSteps.putParcelableArrayList(INGREDIENTS_BUNDLED, mTheIngredients);
         argsForIngredientsSteps.putParcelableArrayList(STEPS_BUNDLED, mTheSteps);
+        argsForIngredientsSteps.putBoolean(TWO_PANE, mTwoPane);
 
         // If we have successfully passed the selected TheIngredient to this activity, begin the
         // transaction to start the StepsFragment
@@ -90,16 +96,20 @@ public class StepsAndIngredientsActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * IN MOBILE MODE THIS SHOULD ONLY BE INFLATED WHEN USER HAS CLICKED ON A STEP
-     * FURTHERMORE WHEN A USER CLICKS ON A STEP IT SHOULD REPLACE THE STEPSFRAGMENT?
-     */
-//    private void inflateDetailFragment() {
+
+//    // Ingredients & Steps Data Goes Into TheStepsFragment
+//    private void inflateStepsAndDetailFragment() {
 //
-//        DetailFragment detailFragment = new DetailFragment();
+//        inflateStepsFragment();
 //
-//        fragmentManager.beginTransaction()
-//                .add(R.id.detail_container, detailFragment)
+//        // Initialise the StepsFragment
+//        mDetailFragment = new DetailFragment();
+//        // Placing the Bundle Arguments into the stepsFragment
+//        //mDetailFragment.setArguments(argsForDetailFragment);
+//
+//        // Start inflate the StepsFragment
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.detail_container, mDetailFragment)
 //                .commit();
 //    }
 }
