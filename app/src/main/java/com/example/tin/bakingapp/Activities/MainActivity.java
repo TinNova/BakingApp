@@ -143,7 +143,10 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
 
         // Getting Ingredients To Be Passed To The Widget
         mTheIngredients = mTheRecipeContent.get(clickedItemIndex).getIngredients();
-        passTheIngredientsToWidgetProvider(mTheIngredients);
+        makeWidgetData(mTheIngredients);
+
+        //makeWidgetData(mTheIngredients);
+        sendBroadcast();
 
         //passTheIngredientsToWidgetProvider(quantity, ingredient, measure);
         startActivity(intent);
@@ -160,21 +163,19 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
     // Takes ClickedOn TheIngredients ArrayList And Converts It To Json
     // Then Passes The Json To The RecipeWidgetService, this will display the selected ingredients
     // in the Widget
-    private void passTheIngredientsToWidgetProvider(ArrayList<TheIngredients> theIngredients) {
+    private void makeWidgetData(ArrayList<TheIngredients> theIngredients) {
         // Initialise a Gson
         Gson gson = new Gson();
         // Convert theIngredients to a Json using the Gson Library
-        String theIngredientsjson = gson.toJson(theIngredients);
+        String theIngredientsJson = gson.toJson(theIngredients);
         // Initialise SharedPreferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = prefs.edit();
         // Pass in theIngredients in Json format
-        editor.putString(SHARED_PREFERENCES_KEY, theIngredientsjson).apply();
+        editor.putString(SHARED_PREFERENCES_KEY, theIngredientsJson).apply();
 
-        sendBroadcast();
     }
 
-    //TODO: I THINK THE WIDGET IS NOT UPDATING BECAUSE OF THE "setAction()" METHOD, DOUBLE CHECK THAT uri!
     private void sendBroadcast() {
         Intent intent = new Intent(this, RecipeWidgetProvider.class);
         intent.setAction("android.appwidget.action.APPWIDGET_UPDATE\"");

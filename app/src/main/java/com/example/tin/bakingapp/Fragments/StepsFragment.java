@@ -107,10 +107,8 @@ public class StepsFragment extends Fragment implements TheStepsAdapter.TheStepsC
     @Override
     public void onClick(int position, TheSteps theStepsModel) {
 
-        //TODO: The commented out code could be used to launch the fragment when in tablet mode
         // If the device has a minimum width of 600dp inflate the DetailFragment within the
         // StepsAndIngredientsActivity
-
         if (mTwoPane == true) {
             // Creating a Bundle to hold the ingredientsList & stepsList
             Bundle argsForCurrentStep = new Bundle();
@@ -141,5 +139,3 @@ public class StepsFragment extends Fragment implements TheStepsAdapter.TheStepsC
     }
 
 }
-
-//TODO: On App Rotation it runs the onCreateView more and more times, test it out with the LOG: "TheIngredients & TheSteps Taken From MainActivity Bundle"

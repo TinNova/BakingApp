@@ -20,10 +20,9 @@ import java.util.ArrayList;
  */
 
 public class RecipeWidgetService extends RemoteViewsService {
-
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new RecipeServiceFactory(this);
+        return new RecipeServiceFactory(this.getApplicationContext());
     }
 
     private class RecipeServiceFactory implements RemoteViewsService.RemoteViewsFactory {
@@ -44,10 +43,9 @@ public class RecipeWidgetService extends RemoteViewsService {
 
         @Override
         public void onDataSetChanged() {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            String theIngredientsJson = sharedPreferences.getString(MainActivity.SHARED_PREFERENCES_KEY, "");
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            String theIngredientsJson = preferences.getString(MainActivity.SHARED_PREFERENCES_KEY, "");
             if (!theIngredientsJson.equals("")) {
-
                 Gson gson = new Gson();
                 mTheIngredients = gson.fromJson(theIngredientsJson, new TypeToken<ArrayList<TheIngredients>>() {
                 }.getType());
