@@ -11,9 +11,11 @@ import com.example.tin.bakingapp.R;
 
 /**
  * Implementation of App Widget functionality.
+ * Code copied from this sample project: https://github.com/popnfresh234/widget_sample
  */
 public class RecipeWidgetProvider extends AppWidgetProvider {
 
+    
 
     @Override
     public void onReceive(Context context, Intent intent) {

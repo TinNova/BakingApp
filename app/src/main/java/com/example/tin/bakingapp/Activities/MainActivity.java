@@ -182,3 +182,6 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
         sendBroadcast(intent);
     }
 }
+
+//TODO: Tidy up the design in Tab mode
+//TODO: Make the video auto change to full screen on app rotation
