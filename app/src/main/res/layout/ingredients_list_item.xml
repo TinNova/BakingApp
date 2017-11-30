@@ -36,7 +36,8 @@
             tools:layout_editor_absoluteX="18dp"
             android:textSize="15sp"
             tools:text="5"
-            android:layout_marginRight="4dp" />
+            android:layout_marginRight="4dp"
+            android:layout_marginEnd="4dp" />
 
         <TextView
             android:id="@+id/measure_tv"

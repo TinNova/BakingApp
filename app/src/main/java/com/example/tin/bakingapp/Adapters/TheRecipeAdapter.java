@@ -18,7 +18,7 @@ public class TheRecipeAdapter extends RecyclerView.Adapter<TheRecipeAdapter.View
     private final List<TheRecipe> recipes;
     private final Context context;
 
-    final ListItemClickListener mOnClickListener;
+    private final ListItemClickListener mOnClickListener;
 
 
     public interface ListItemClickListener {
@@ -70,7 +70,7 @@ public class TheRecipeAdapter extends RecyclerView.Adapter<TheRecipeAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         //ImageView ivRecipeImage;
-        TextView tvRecipeName;
+        final TextView tvRecipeName;
 
         @Override
         public void onClick(View view) {

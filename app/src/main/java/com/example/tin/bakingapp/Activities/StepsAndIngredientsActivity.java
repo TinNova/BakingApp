@@ -18,17 +18,17 @@ public class StepsAndIngredientsActivity extends AppCompatActivity {
 
     private static final String TAG = StepsAndIngredientsActivity.class.getSimpleName();
 
-    public static String INGREDIENTS_BUNDLED = "argsForIngredients";
-    public static String STEPS_BUNDLED = "argsForSteps";
-    public static String TWO_PANE = "argsForTwoPain";
+    public static final String INGREDIENTS_BUNDLED = "argsForIngredients";
+    public static final String STEPS_BUNDLED = "argsForSteps";
+    public static final String TWO_PANE = "argsForTwoPain";
 
     // mTwoPan tells us if the device has a minimum width of 600dp
     private boolean mTwoPane;
 
-    ArrayList<TheSteps> mTheSteps;
-    ArrayList<TheIngredients> mTheIngredients;
+    private ArrayList<TheSteps> mTheSteps;
+    private ArrayList<TheIngredients> mTheIngredients;
 
-    StepsFragment mStepsFragment;
+    private StepsFragment mStepsFragment;
     DetailFragment mDetailFragment;
 
 

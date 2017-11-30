@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tin.bakingapp.Fragments.DetailFragment;
-import com.example.tin.bakingapp.Fragments.StepsFragment;
 import com.example.tin.bakingapp.Models.TheSteps;
 import com.example.tin.bakingapp.R;
 
@@ -21,10 +19,10 @@ public class DetailActivity extends AppCompatActivity {
 
     private static final String TAG = DetailActivity.class.getSimpleName();
 
-    DetailFragment mDetailFragment;
-    int mPosition;
+    private DetailFragment mDetailFragment;
+    private int mPosition;
 
-    ArrayList<TheSteps> mTheSteps;
+    private ArrayList<TheSteps> mTheSteps;
 
 
     @Override

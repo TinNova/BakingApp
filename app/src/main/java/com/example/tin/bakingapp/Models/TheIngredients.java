@@ -4,9 +4,9 @@ import android.os.Parcelable;
 
 public class TheIngredients implements Parcelable {
 
-    int quantity;
-    String measure;
-    String ingredient;
+    private int quantity;
+    private String measure;
+    private String ingredient;
 
     public TheIngredients(int quantity, String measure, String ingredient) {
 
@@ -30,7 +30,7 @@ public class TheIngredients implements Parcelable {
     // Using the `in` variable, we can retrieve the values that
     // we originally wrote into the `Parcel`.  This constructor is usually
     // private so that only the `CREATOR` field can access.
-    public TheIngredients(android.os.Parcel in) {
+    private TheIngredients(android.os.Parcel in) {
         quantity = in.readInt();
         measure = in.readString();
         ingredient = in.readString();

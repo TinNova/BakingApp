@@ -1,9 +1,7 @@
 package com.example.tin.bakingapp.Adapters;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +10,6 @@ import android.widget.TextView;
 import com.example.tin.bakingapp.Models.TheSteps;
 import com.example.tin.bakingapp.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 
@@ -21,7 +17,7 @@ public class TheStepsAdapter extends RecyclerView.Adapter<TheStepsAdapter.ViewHo
 
     private final ArrayList<TheSteps> mStepsList;
     private final Context mContext;
-    private TheStepsClickListener mClickListener;
+    private final TheStepsClickListener mClickListener;
 
     // Interface that sends information to the StepsFragment
     // We need to send back to the StepsFragment the position and the step that was clicked on
@@ -84,7 +80,7 @@ public class TheStepsAdapter extends RecyclerView.Adapter<TheStepsAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView tvShortDescription;
+        final TextView tvShortDescription;
         TheSteps mCurrentStep;
 
         public ViewHolder(View itemView) {

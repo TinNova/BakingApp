@@ -4,11 +4,11 @@ import android.os.Parcelable;
 
 public class TheSteps implements Parcelable{
 
-    int id;
-    String shortDescription;
-    String description;
-    String videoURL;
-    String thumbnailURL;
+    private int id;
+    private String shortDescription;
+    private String description;
+    private String videoURL;
+    private String thumbnailURL;
 
     public TheSteps(int id, String shortDescription, String description, String videoURL, String thumbnailURL) {
 
@@ -35,7 +35,7 @@ public class TheSteps implements Parcelable{
     // Using the `in` variable, we can retrieve the values that
     // we originally wrote into the `Parcel`.  This constructor is usually
     // private so that only the `CREATOR` field can access.
-    public TheSteps(android.os.Parcel in) {
+    private TheSteps(android.os.Parcel in) {
         id = in.readInt();
         shortDescription = in.readString();
         description = in.readString();

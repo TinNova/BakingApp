@@ -11,15 +11,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * Created by Tin on 18/11/2017.
- */
 
 public class NetworkConnection {
 
     private static final String TAG = NetworkConnection.class.getSimpleName();
     // The BAKING_APP_URL
-    public static final String BAKING_APP_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
+    private static final String BAKING_APP_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
 
     /** OkHttp Library Used To Generate A JSONArray From The BAKING_APP_URL

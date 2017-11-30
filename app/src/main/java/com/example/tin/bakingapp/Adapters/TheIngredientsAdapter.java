@@ -50,9 +50,9 @@ public class TheIngredientsAdapter extends RecyclerView.Adapter<TheIngredientsAd
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvIngredient;
-        TextView tvMeasure;
-        TextView tvQuantity;
+        final TextView tvIngredient;
+        final TextView tvMeasure;
+        final TextView tvQuantity;
 
         public ViewHolder(View itemView) {
             super(itemView);

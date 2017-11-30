@@ -28,20 +28,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-/**
- * Created by Tin on 20/11/2017.
- */
-
 public class DetailFragment extends Fragment {
 
     private static final String PLAYER_POSITION = "player_position";
 
-    ArrayList<TheSteps> mSteps;
+    private ArrayList<TheSteps> mSteps;
 
-    int mPosition;
+    private int mPosition;
 
-    TextView tvStepDescription;
-    ImageView ivNoVideo;
+    private TextView tvStepDescription;
+    private ImageView ivNoVideo;
 
     private SimpleExoPlayer mExoPlayer;
     private SimpleExoPlayerView mExoPlayerView;

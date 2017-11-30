@@ -20,8 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="250dp"
             android:background="@color/cardview_dark_background"
-            android:contentDescription="TODO"
-            android:visibility="gone" />
+            android:contentDescription="@string/no_video_img_cd"
+            android:visibility="gone"
+            tools:ignore="HardcodedText" />
 
         <!--If there isn't a VideoUrl but there is an image, this
         ImageView will be VISIBLE-->
@@ -29,6 +30,7 @@
             android:id="@+id/detail_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:contentDescription="@string/detail_thumbnail_cd"
             android:visibility="gone"/>
 
         <LinearLayout
@@ -39,8 +41,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Instructions:"
-            android:textSize="18dp"
+            android:text="@string/instructions_text"
+            android:textSize="@dimen/subHeading"
             android:textStyle="bold"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="0dp"

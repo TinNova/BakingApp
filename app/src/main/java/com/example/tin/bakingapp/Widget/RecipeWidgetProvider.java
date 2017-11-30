@@ -15,7 +15,7 @@ import com.example.tin.bakingapp.R;
  */
 public class RecipeWidgetProvider extends AppWidgetProvider {
 
-    
+
 
     @Override
     public void onReceive(Context context, Intent intent) {

@@ -45,7 +45,7 @@ public class TheRecipe implements Parcelable {
     // Using the `in` variable, we can retrieve the values that
     // we originally wrote into the `Parcel`.  This constructor is usually
     // private so that only the `CREATOR` field can access.
-    public TheRecipe(Parcel in) {
+    private TheRecipe(Parcel in) {
         id = in.readInt();
         name = in.readString();
         //in.readList(ingredients, (com.example.tin.bakingapp.Models.TheIngredients.class.getClassLoader()));

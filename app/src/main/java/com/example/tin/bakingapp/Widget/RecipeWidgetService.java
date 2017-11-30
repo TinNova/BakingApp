@@ -15,9 +15,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
-/**
- * Created by Tin on 29/11/2017.
- */
 
 public class RecipeWidgetService extends RemoteViewsService {
     @Override
@@ -27,7 +24,7 @@ public class RecipeWidgetService extends RemoteViewsService {
 
     private class RecipeServiceFactory implements RemoteViewsService.RemoteViewsFactory {
 
-        private Context context;
+        private final Context context;
         private ArrayList<TheIngredients> mTheIngredients;
 
         RecipeServiceFactory(Context context) {

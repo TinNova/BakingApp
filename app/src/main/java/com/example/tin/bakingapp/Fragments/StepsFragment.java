@@ -24,10 +24,6 @@ import java.util.ArrayList;
 import static com.example.tin.bakingapp.Activities.StepsAndIngredientsActivity.TWO_PANE;
 
 
-/**
- * Created by Tin on 19/11/2017.
- */
-
 public class StepsFragment extends Fragment implements TheStepsAdapter.TheStepsClickListener {
 
     private static final String TAG = StepsFragment.class.getSimpleName();
@@ -36,23 +32,23 @@ public class StepsFragment extends Fragment implements TheStepsAdapter.TheStepsC
     private static final String STEPS_KEY = "steps_key";
 
 
-    public static String CURRENT_STEP = "current_step";
-    public static String CURRENT_POSITION = "current_position";
+    public static final String CURRENT_STEP = "current_step";
+    public static final String CURRENT_POSITION = "current_position";
 
-    ArrayList<TheIngredients> mIngredients;
-    ArrayList<TheSteps> mSteps;
-    boolean mTwoPane;
+    private ArrayList<TheIngredients> mIngredients;
+    private ArrayList<TheSteps> mSteps;
+    private boolean mTwoPane;
 
-    LinearLayoutManager stepsLayoutManager;
-    LinearLayoutManager ingredientsLayoutManager;
+    private LinearLayoutManager stepsLayoutManager;
+    private LinearLayoutManager ingredientsLayoutManager;
 
-    RecyclerView stepsRecyclerView;
-    RecyclerView ingredientsRecyclerView;
+    private RecyclerView stepsRecyclerView;
+    private RecyclerView ingredientsRecyclerView;
 
-    TheStepsAdapter mStepsAdapter;
-    TheIngredientsAdapter mIngredientsAdapter;
+    private TheStepsAdapter mStepsAdapter;
+    private TheIngredientsAdapter mIngredientsAdapter;
 
-    DetailFragment mDetailFragment;
+    private DetailFragment mDetailFragment;
 
     // Mandatory Constructor for initiating the fragment
     public StepsFragment() {
@@ -109,7 +105,7 @@ public class StepsFragment extends Fragment implements TheStepsAdapter.TheStepsC
 
         // If the device has a minimum width of 600dp inflate the DetailFragment within the
         // StepsAndIngredientsActivity
-        if (mTwoPane == true) {
+        if (mTwoPane) {
             // Creating a Bundle to hold the ingredientsList & stepsList
             Bundle argsForCurrentStep = new Bundle();
             argsForCurrentStep.putParcelableArrayList(CURRENT_STEP, mSteps);

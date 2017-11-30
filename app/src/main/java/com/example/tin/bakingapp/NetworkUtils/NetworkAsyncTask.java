@@ -17,7 +17,7 @@ public class NetworkAsyncTask extends AsyncTask<Void, Void, ArrayList<TheRecipe>
 
     private static final String TAG = NetworkAsyncTask.class.getSimpleName();
 
-    private NetworkAsyncTaskListener networkAsyncTaskListener;
+    private final NetworkAsyncTaskListener networkAsyncTaskListener;
 
     public NetworkAsyncTask(NetworkAsyncTaskListener listener) {
         networkAsyncTaskListener = listener;

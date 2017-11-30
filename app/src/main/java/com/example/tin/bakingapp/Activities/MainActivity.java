@@ -22,8 +22,6 @@ import com.example.tin.bakingapp.R;
 import com.example.tin.bakingapp.Widget.RecipeWidgetProvider;
 import com.google.gson.Gson;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -38,12 +36,13 @@ public class MainActivity extends AppCompatActivity implements NetworkAsyncTaskL
 
     // Needed for the RecyclerView
     // This will be used to attach the RecyclerView to the Adapter
-    @BindView(R.id.recyclerView_recipes) RecyclerView mRecyclerView;
+    @BindView(R.id.recyclerView_recipes)
+    RecyclerView mRecyclerView;
     private RecyclerView.Adapter recipeAdapter;
 
     // Used to check if the device has internet connection
-    ConnectivityManager connectionManager;
-    NetworkInfo networkInfo;
+    private ConnectivityManager connectionManager;
+    private NetworkInfo networkInfo;
 
     // RecipeContent for use outside of the listener
     private ArrayList<TheRecipe> mTheRecipeContent;
